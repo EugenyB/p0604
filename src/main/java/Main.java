@@ -3,7 +3,70 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        main.run();
+        main.runArrayListPractise();
+    }
+
+    private void runArrayListPractise() {
+        List<String> list = new ArrayList<>();
+        list.add("first");
+        list.add(0,"second");
+        list.add(0,"third");
+        list.add(0, "fourth");
+        list.add(0,"sixth");
+        list.add(1, "fifth");
+        //System.out.println(list);
+        ListIterator<String> iterator2 = list.listIterator();
+        while (iterator2.hasNext()) {
+            System.out.println(iterator2.next());
+        }
+
+        List<String> numbers = new ArrayList<>();
+        numbers.add("One");
+        numbers.add("Two");
+        numbers.add("Four");
+        numbers.set(2, "Three");
+        for (String element : numbers) {
+            System.out.println(element);
+        }
+
+        ArrayList<String> birds = new ArrayList<>();
+        String s1 = "Crow";
+        String s2 = "Duck";
+        String s3 = "Pig";
+        String s4 = "Pigeon";
+        birds.add(s1);
+        birds.add(s2);
+        birds.add(s3);
+        birds.add(s4);
+        birds.remove(2);
+        for (String element : birds) {
+            System.out.println(element);
+        }
+
+        ArrayList<String> moreBirds = new ArrayList<>();
+        moreBirds.add("Swan");
+        moreBirds.add("Flamingo");
+
+        birds.addAll (3, moreBirds); // Додавання всіх елементів moreBirds до birds, починаючи з індекса 3
+        /*for (String val : birds) {
+            System.out.println(val);*/
+        for (Iterator<String> iterator = (Iterator<String>) list.iterator(); iterator.hasNext(); ) {
+            String next = iterator.next();
+            System.out.println(next);
+        }
+
+        ArrayList<String> countries = new ArrayList<>();
+        countries.add("Norway");
+        countries.add("Sweden");
+        countries.clear(); // Видалення всіх елементів із списку
+        for (String val : countries) {
+            System.out.println(val);
+        }
+    }
+
+    private void runPair() { // Дженерік з двома параметрами
+        Pair <Integer, String> worldCup = new Pair <> (2022, "Qatar");
+        System.out.println("World cup " + worldCup.getFirst() + " in " + worldCup.getSecond());
     }
 
     private void run() {
@@ -15,7 +78,7 @@ public class Main {
         int bill = people.indexOf(new Person("Bill", 21));
         System.out.println(bill);
 
-        Person[] array = new Person[0];
+        Person[] array = new Person[0]; // toArray з параметром
         array = people.toArray(array);
         people.get(1).setAge(99);
 
@@ -23,7 +86,7 @@ public class Main {
             System.out.println(person);
         }
 
-        List<Person> list = new ArrayList<>(Arrays.asList(array));
+        List<Person> list = new ArrayList<>(Arrays.asList(array)); // Обгортаємо в створення нового ArrayList
         System.out.println(people.getClass());
         System.out.println(list.getClass());
     }
@@ -40,7 +103,7 @@ public class Main {
         // 1 2 4 3 5 6 7 8 10 11 3 12 15 0
         // 1 3 5 7 11 3 15
 
-        list.removeIf(e -> e % 2 == 0);
+        list.removeIf(e -> e % 2 == 0); // Лямбда вираз
         System.out.println(list);
 
         System.out.println(list.contains(3));
@@ -89,6 +152,15 @@ public class Main {
     }
 
     private void run1() {
+        BoxPrinter<String> myBoxPrinter = new BoxPrinter<> ("I'm learning generics!");
+        System.out.println(myBoxPrinter);
+
+        BoxPrinter<Integer> myIntBoxPrinter = new BoxPrinter<> (777);
+        System.out.println(myIntBoxPrinter);
+
+        BoxPrinter<Double> myDoubleBoxPrinter = new BoxPrinter<> (0.77);
+        System.out.println(myDoubleBoxPrinter);
+
         BoxPrinter<String> bp1 = new BoxPrinter<>("Hello");
         System.out.println(bp1);
 
@@ -118,7 +190,33 @@ public class Main {
         System.out.println(list);
     }
 
-    private Optional<String> findMax(String[] arr) {
+    private void runG() {
+        GenericsPractise<String> myStringGeneric = new GenericsPractise<> ("learning generics");
+        System.out.println(myStringGeneric);
+
+        GenericsPractise<Integer> myIntGeneric = new GenericsPractise<> (789);
+        System.out.println(myIntGeneric);
+
+        GenericsPractise<Double> myDoubleGeneric = new GenericsPractise<> (0.99);
+        System.out.println(myDoubleGeneric);
+
+        var randomGeneric = new GenericsPractise<>(123456789);
+        System.out.println(randomGeneric);
+
+        String[] arr = {"short", "long", "superlong"};
+        Optional<String> longest3 = findMax(arr);
+        if (longest3.isPresent()) {
+            System.out.println(longest3.get());
+        } else {
+            System.out.println("not found");
+        }
+
+        List <String> pets = List.of("cat", "dog", "chinchilla", "hamster");
+        System.out.println(pets);
+
+    }
+
+    private Optional<String> findMax(String[] arr) { // Пощук найдовшого рядка в масиві
         if (arr.length == 0) return Optional.empty();
         String res = arr[0];
         for (int i = 1; i < arr.length; i++) {
